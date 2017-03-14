@@ -5,7 +5,7 @@ if (nchar(Sys.getenv("SPARK_HOME")) < 1) {
 library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
 sparkR.session(master = "local[*]", sparkConfig = list(spark.driver.memory = "2g"))
 
-##### Chapter 3: Classification using Nearest Neighbors SparkR Version--------------------
+##### Chapter 3: Classification using RandomForest SparkR Version--------------------
 filePath <- "/Machine Learning with R (2nd Ed.)/Chapter 03/wisc_bc_data.csv"
 
 wbcd <- read.df(filePath, "csv", header = "true", inferSchema = "true", na.strings = "NA")
@@ -95,3 +95,38 @@ measurePrecisionRecall(pred_t$prediction, pred_t$diagnosis)
 #precision:  96.1039%
 #recall:     97.36842%
 #f-measure:  96.73203%
+
+############ bayes ########################
+#categorize wbcd by ntile(n)
+
+#select ntile(4) over (order by radius_mean) as radius_mean, .... from wbcd
+sql <- c()
+for (col in names(wbcd)[2:31]) 
+  sql <- c(sql, paste0("ntile(2) over (order by ", col , ")-1 as ", col))
+selcols <- paste(sql, sep="",collapse=",")
+selsql <- paste("select (case diagnosis when 'B' then 1 else 0 end) as diagnosis, ", selcols, " from wbcd", sep="",collapse="")
+wbcd_b <- sql(selsql)
+#split train data & test data
+wbcd_train_test_b <- randomSplit(wbcd_b, c(0.75,0.25), 0)
+wbcd_b_train <- wbcd_train_test_b[[1]]
+wbcd_b_test <- wbcd_train_test_b[[2]]
+#show proportion of diagnosis
+showDF(count(groupBy(wbcd_b_train, "diagnosis")))
+showDF(count(groupBy(wbcd_b_test, "diagnosis")))
+
+#train Bayes model
+model <- spark.naiveBayes(wbcd_b_train, diagnosis ~ ., smoothing = 0)
+summary(model)
+#make prediction
+predictions <- predict(model, wbcd_b_test)
+head(predictions)
+
+#translate SparkDataFrame to R data.frame
+pred_t <- as.data.frame(select(predictions, "diagnosis", "prediction"))
+str(pred_t)
+
+pred_t$prediction <- as.integer(pred_t$prediction)
+measurePrecisionRecall(pred_t$prediction, pred_t$diagnosis)
+#precision:  92%
+#recall:     90.78947%
+#f-measure:  91.39073%
