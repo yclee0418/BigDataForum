@@ -22,7 +22,8 @@
   1. 確認 container 已啟動 (docker ps)，若沒有則 docker run -h hadoop1 -p 52022:22 -it ubuntu:my bash
   2. 確認 sshd 已啟動
   3. putty localhost:52022
-  4. set SHELL=/bin/bash , exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
+  4. set SHELL=/bin/bash (可由 env 看到使用的shell，故修改變數後重新登入)
+  5. exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
   
   
   
