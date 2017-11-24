@@ -10,7 +10,7 @@
   4. 將已安裝之版本建立自己的Image版本: docker commit -m "install sshd" containerID ubuntu:my
 
 安裝 sshd : 
-  1. docker run -h hadoop1 -p 52022:22 -it ubuntu:my bash
+  1. docker run -h hadoop1 -p 52022:22 -p 2181:2181 -p 9092:9092 -p 9000:9000 -p 50070:50070 -p 8088:8088 -p 4040:4040 -it ubuntu:my bash
   2. apt install openssh-server
   3. service ssh status
   4. service ssh restart => run if sshd is not run
