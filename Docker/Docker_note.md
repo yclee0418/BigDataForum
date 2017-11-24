@@ -24,7 +24,8 @@
   3. putty localhost:52022 (視docker run container 時 -p 參數而定)
   4. set SHELL=/bin/bash (可由 env 看到使用的shell，故修改變數後重新登入)
   5. exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
-  
+  6. pscp local.txt hduser@localhost:/home/hduser/Downloads => 上傳檔案
+  
   
   
 使用已建立之容器進行後續作業
