@@ -8,3 +8,9 @@
   val (acc, mut, num)=nums.aggregate((0,0,1))((acc, number) => 
       (acc._1+number, acc._2+1, acc._3 * number), (p1,p2)=>(p1._1+p2._1, p1._2+p2._2, p1._3*p2._3))
   ```
+  
+### Implicit Conversion In Scala
+refer to [this article](https://ithelp.ithome.com.tw/articles/10186437)
+
+### Currying In Scala
+refer to [this article](https://ithelp.ithome.com.tw/articles/10187406)
