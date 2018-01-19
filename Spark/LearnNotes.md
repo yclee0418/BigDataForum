@@ -14,3 +14,8 @@ refer to [this article](https://ithelp.ithome.com.tw/articles/10186437)
 
 ### Currying In Scala
 refer to [this article](https://ithelp.ithome.com.tw/articles/10187406)
+
+### ReduceByKey vs GroupByKey
+ * ReduceByKey : 每個分區會先用reduce函式Aggregate一次，然後再shuffling資料做合併
+ * GroupByKey : 直接shuffling然後套一次reduce函式
+ * shuffling will effect performance, less data to shuffling is better, so **ReduceByKey is suggested** ! 
