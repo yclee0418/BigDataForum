@@ -19,7 +19,7 @@
   2. apt install openssh-server
   3. service ssh status
   4. service ssh restart => run if sshd is not run
-  5. useradd -m hduser, passwd hduser => create hduser account
+  5. useradd -m hduser -p hduser => create hduser account
   6. usermod -aG sudo hduser => grant sudo privilege to hduser
   7. apt install sudo => install sudo
 
