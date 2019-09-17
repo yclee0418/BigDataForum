@@ -1,13 +1,15 @@
 建立Image :
   1. 將 ubuntu 最新的Image拉下來: docker run -it ubuntu bash
   2. 拉下來的 ubuntu 裡不會安裝任何東西，在bash裡自行安裝需要的套件
-    * apt update
-    * apt-get install net-tools => install ifconfig
-    * apt-get install iputils-ping => install ping
-    * apt-get install vim => install vim
-    * apt install openssh-server
+  
+    2.1 apt update
+    2.2 apt-get install net-tools => install ifconfig
+    2.3 apt-get install iputils-ping => install ping
+    2.4 apt-get install vim => install vim
+    2.5 apt install openssh-server
   3. exit 跳出 bash 後，用docker ps -a 查看 container ID
-  4. 將已安裝之版本建立自己的Image版本: docker commit -m "install sshd" containerID ubuntu:my
+  4. 執行已存在的 container 
+  5. 將已安裝之版本建立自己的Image版本: docker commit -m "install sshd" containerID ubuntu:my
 
 安裝 sshd : 
   1. docker run -h hadoop1 -p 52022:22 -p 2181:2181 -p 9092:9092 -p 9000:9000 -p 50070:50070 -p 8088:8088 -p 4040:4040 -it ubuntu:my bash
