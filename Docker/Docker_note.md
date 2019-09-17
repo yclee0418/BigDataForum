@@ -9,6 +9,9 @@
     2.5 apt install openssh-server
   3. exit 跳出 bash 後，用docker ps -a 查看 container ID
   4. 執行已存在的 container 
+  
+    4.1 activate container: docker container start CONTAINER_ID
+    4.2 access container: docker container attach CONTAINER_ID or docker exec -ti CONTAINER_ID /bin/bash
   5. 將已安裝之版本建立自己的Image版本: docker commit -m "install sshd" containerID ubuntu:my
 
 安裝 sshd : 
@@ -27,9 +30,3 @@
   4. set SHELL=/bin/bash (可由 env 看到使用的shell，故修改變數後重新登入)
   5. exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
   6. pscp local.txt hduser@localhost:/home/hduser/Downloads => 上傳檔案
-  
-  
-  
-使用已建立之容器進行後續作業
-  1. docker container start CONTAINER_ID
-  2. docker container attach CONTAINER_ID
