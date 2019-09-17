@@ -11,7 +11,7 @@
   4. 執行已存在的 container 
   
     4.1 activate container: docker container start CONTAINER_ID
-    4.2 access container: docker container attach CONTAINER_ID or docker exec -ti CONTAINER_ID /bin/bash
+    4.2 access container: docker exec -ti CONTAINER_ID /bin/bash or docker container attach CONTAINER_ID
   5. 將已安裝之版本建立自己的Image版本: docker commit -m "install sshd" containerID ubuntu:my
 
 安裝 sshd : 
@@ -19,14 +19,17 @@
   2. apt install openssh-server
   3. service ssh status
   4. service ssh restart => run if sshd is not run
-  5. useradd -m hduser -p hduser => create hduser account
+  5. sudo adduser hduser => create hduser account
   6. usermod -aG sudo hduser => grant sudo privilege to hduser
   7. apt install sudo => install sudo
 
 使用 putty 登入 :
-  1. 確認 container 已啟動 (docker ps)，若沒有則 docker run -h hadoop1 -p 52022:22 -it ubuntu:my bash
+  1. 確認 container 已啟動 (docker ps)，若沒有則 docker container start CONTAINER_ID
   2. 確認 sshd 已啟動
-  3. putty localhost:52022 (視docker run container 時 -p 參數而定)
-  4. set SHELL=/bin/bash (可由 env 看到使用的shell，故修改變數後重新登入)
-  5. exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
+  3. Windows:
+  
+    3.1 putty localhost:52022 (視docker run container 時 -p 參數而定)
+    3.2 set SHELL=/bin/bash (可由 env 看到使用的shell，故修改變數後重新登入)
+    3.3 exec /bin/bash --login => putty 預設登入用 sh shell，很難用；改用 bash shell
+  4. SSH command: ssh -l hduser localhost -p 52022
   6. pscp local.txt hduser@localhost:/home/hduser/Downloads => 上傳檔案
