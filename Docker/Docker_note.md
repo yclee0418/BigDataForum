@@ -1,5 +1,5 @@
 建立Image :
-  1. 將 ubuntu 最新的Image拉下來: docker run -it ubuntu bash
+  1. 將 ubuntu 最新的Image拉下來: docker run -h CONTAINER_ID --name CONTAINER_ID -it ubuntu /bin/bash
   2. 拉下來的 ubuntu 裡不會安裝任何東西，在bash裡自行安裝需要的套件
   
     2.1 apt update
